@@ -7,9 +7,17 @@ class DocsController < ApplicationController
 	end
 
 	def new 
+		@doc = Doc.new
 	end
 
 	def created 
+		@doc = Doc.new(doc_params)
+
+		if @doc.save
+			redirect_to @doc
+		else 
+			render 'new'
+		end
 	end
 
 	def edit 
@@ -25,7 +33,8 @@ class DocsController < ApplicationController
 
 	def find_doc
 	end
-	
+
 	def doc_params
+		params.require(:doc).premit(:title, :content)
 	end
 end
